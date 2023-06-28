@@ -2,7 +2,8 @@ package uz.shabbat;
 
 import uz.shabbat.parsing.Parsing;
 import uz.shabbat.parsing.ParsingChabadOrg;
-import uz.shabbat.parsing.ParsingHebcal;
+import uz.shabbat.parsing.ParsingChapter;
+import uz.shabbat.parsing.ParsingChapterChabadOrg;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class Main {
             shabbats.add(parsing.getShabat(geoID));
         }
         return shabbats;
+    }
+
+    public  String getCapter(ParsingChapter parsing) throws IOException {
+        return String.format("Краткое описание недельной главы:\n%s", parsing.getChapter());
     }
 
     public static String getMassage(List<Shabbat> shabats) throws IOException {
@@ -43,5 +48,7 @@ public class Main {
         List<String> geoIDsChabadOrg = List.of("681", "883", "882");
         Main parsing = new Main();
         System.out.println(getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg)));
+        System.out.println();
+        System.out.println(parsing.getCapter(new ParsingChapterChabadOrg()));
     }
 }
