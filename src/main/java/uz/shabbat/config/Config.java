@@ -53,10 +53,6 @@ public class Config {
                 ", geoID=" + Arrays.toString(geoID) +
                 '}';
     }
-
-    public static void main(String[] args) {
-
-    }
 }
 
 
