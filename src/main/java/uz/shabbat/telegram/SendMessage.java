@@ -21,7 +21,7 @@ public class SendMessage {
         return instance;
     }
 
-    public void send(String tgToken, int chatId, String txt) throws IOException {
+    public void send(String tgToken, String chatId, String txt) throws IOException {
         String urlToken = "https://api.telegram.org/bot" + tgToken + "/sendMessage";
         HttpURLConnection con = null;
         String urlParameters = "chat_id=" + chatId + "&text=" + txt;

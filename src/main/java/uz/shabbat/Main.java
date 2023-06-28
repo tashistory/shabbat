@@ -1,18 +1,22 @@
 package uz.shabbat;
 
-import uz.shabbat.parsing.Parsing;
-import uz.shabbat.parsing.ParsingChabadOrg;
-import uz.shabbat.parsing.ParsingChapter;
-import uz.shabbat.parsing.ParsingChapterChabadOrg;
+import uz.shabbat.config.Config;
+import uz.shabbat.parsing.*;
 import uz.shabbat.telegram.SendMessage;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public  List<Shabbat> getShabats(Parsing parsing, List<String> geoIDs) throws IOException {
+    public List<Shabbat> getShabats(Parsing parsing, List<String> geoIDs) throws IOException {
         List<Shabbat> shabbats = new ArrayList<>();
         for (String geoID : geoIDs) {
             shabbats.add(parsing.getShabat(geoID));
@@ -20,7 +24,7 @@ public class Main {
         return shabbats;
     }
 
-    public  String getCapter(ParsingChapter parsing) throws IOException {
+    public String getCapter(ParsingChapter parsing) throws IOException {
         return String.format("Краткое описание недельной главы:\n%s", parsing.getChapter());
     }
 
@@ -44,20 +48,43 @@ public class Main {
         return result.toString();
     }
 
-    public static void main(String[] args) throws IOException {
-        List<String> geoIDsHebcal = List.of("1512569", "1217662", "1216265", "1514019");
-        List<String> geoIDsChabadOrg = List.of("681", "883", "882");
+    public static String readConfig() {
+        StringBuilder rsult = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader("config.xml"))) {
+            in.lines().forEach(rsult::append);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rsult.toString();
+    }
 
+    public Config getConfig() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Config.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(readConfig())) {
+            return (Config) unmarshaller.unmarshal(reader);
+        }
+    }
+
+
+    public static void main(String[] args) throws IOException, JAXBException {
         Main parsing = new Main();
+        Config config = parsing.getConfig();
+        List<String> geoIDs = List.of(config.getGeoID());
+        String tgToken = config.getTgToken();
+        String chatId = config.getChatId();
         SendMessage send = SendMessage.getInstance();
-        String tgToken = "6125429176:AAF5RCb68lhKPXUeEBOyefGMIrI9BFN3pZY";
-        int  chatId = 722152527;
-        String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg));
-        send.send(tgToken, chatId, txt);
-        txt = parsing.getCapter(new ParsingChapterChabadOrg());
-        send.send(tgToken, chatId, txt);
-        // System.out.println(getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg)));
-        //System.out.println();
-        //System.out.println(parsing.getCapter(new ParsingChapterChabadOrg()));
+        String namewebsite = config.getNameWebsite();
+        if ("hebcal.com".equals(namewebsite)){
+            String txt = getMassage(parsing.getShabats(new ParsingHebcal(), geoIDs));
+            send.send(tgToken, chatId, txt);
+        } else if ("chabad.org".equals(namewebsite)) {
+            String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDs));
+            send.send(tgToken, chatId, txt);
+            txt = parsing.getCapter(new ParsingChapterChabadOrg());
+            send.send(tgToken, chatId, txt);
+        } else {
+            throw new UnsupportedOperationException("Wrong site. Use the config file!");
+        }
     }
 }
