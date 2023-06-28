@@ -4,6 +4,7 @@ import uz.shabbat.parsing.Parsing;
 import uz.shabbat.parsing.ParsingChabadOrg;
 import uz.shabbat.parsing.ParsingChapter;
 import uz.shabbat.parsing.ParsingChapterChabadOrg;
+import uz.shabbat.parsing.telegram.SendMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,9 +47,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<String> geoIDsHebcal = List.of("1512569", "1217662", "1216265", "1514019");
         List<String> geoIDsChabadOrg = List.of("681", "883", "882");
+
         Main parsing = new Main();
-        System.out.println(getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg)));
-        System.out.println();
-        System.out.println(parsing.getCapter(new ParsingChapterChabadOrg()));
+        SendMessage send = SendMessage.getInstance();
+        String tgToken = "6125429176:AAF5RCb68lhKPXUeEBOyefGMIrI9BFN3pZY";
+        int  chatId = 722152527;
+        String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg));
+        send.send(tgToken, chatId, txt);
+        txt = parsing.getCapter(new ParsingChapterChabadOrg());
+        send.send(tgToken, chatId, txt);
+        // System.out.println(getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDsChabadOrg)));
+        //System.out.println();
+        //System.out.println(parsing.getCapter(new ParsingChapterChabadOrg()));
     }
 }
