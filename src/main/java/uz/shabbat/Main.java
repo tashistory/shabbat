@@ -4,7 +4,7 @@ import uz.shabbat.parsing.Parsing;
 import uz.shabbat.parsing.ParsingChabadOrg;
 import uz.shabbat.parsing.ParsingChapter;
 import uz.shabbat.parsing.ParsingChapterChabadOrg;
-import uz.shabbat.parsing.telegram.SendMessage;
+import uz.shabbat.telegram.SendMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;

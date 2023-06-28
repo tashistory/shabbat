@@ -1,4 +1,4 @@
-package uz.shabbat.parsing.telegram;
+package uz.shabbat.telegram;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
