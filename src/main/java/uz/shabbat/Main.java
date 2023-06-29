@@ -13,13 +13,16 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 public class Main {
 
-    public List<Shabbat> getShabats(Parsing parsing, List<String> geoIDs) throws IOException {
+    public List<Shabbat> getShabats(Parsing parsing, String driverPath, List<String> geoIDs) throws IOException {
         List<Shabbat> shabbats = new ArrayList<>();
         for (String geoID : geoIDs) {
-            shabbats.add(parsing.getShabat(geoID));
+            shabbats.add(parsing.getShabat(geoID, driverPath));
         }
         return shabbats;
     }
@@ -75,11 +78,12 @@ public class Main {
         String chatId = config.getChatId();
         SendMessage send = SendMessage.getInstance();
         String namewebsite = config.getNameWebsite();
+        String driverPath = config.getDriverPath();
         if ("hebcal.com".equals(namewebsite)){
-            String txt = getMassage(parsing.getShabats(new ParsingHebcal(), geoIDs));
+            String txt = getMassage(parsing.getShabats(new ParsingHebcal(), "", geoIDs));
             send.send(tgToken, chatId, txt);
         } else if ("chabad.org".equals(namewebsite)) {
-            String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), geoIDs));
+            String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), driverPath, geoIDs));
             send.send(tgToken, chatId, txt);
             txt = parsing.getCapter(new ParsingChapterChabadOrg());
             send.send(tgToken, chatId, txt);

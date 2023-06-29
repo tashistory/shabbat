@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 
 public class SendMessage {
     private static SendMessage instance = null;

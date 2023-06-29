@@ -5,8 +5,11 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
 import java.io.IOException;
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 
 public class ParsingChapterChabadOrg implements ParsingChapter {
     @Override

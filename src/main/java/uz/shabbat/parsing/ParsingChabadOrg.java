@@ -5,15 +5,20 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import uz.shabbat.Main;
 import uz.shabbat.Shabbat;
 
 import java.io.IOException;
 import java.util.List;
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 
 public class ParsingChabadOrg implements Parsing{
     @Override
-    public Shabbat getShabat(String geoID) throws IOException {
-        System.setProperty("webdriver.chrome.driver", "driver\\chromedriver.exe");
+    public Shabbat getShabat(String geoID, String driverPath) throws IOException {
+        System.setProperty("webdriver.chrome.driver", driverPath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         WebDriver webDriver = new ChromeDriver(options);

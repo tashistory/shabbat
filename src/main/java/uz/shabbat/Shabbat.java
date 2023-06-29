@@ -1,5 +1,8 @@
 package uz.shabbat;
-
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 public class Shabbat {
     private final String date;
     private final String parashat;

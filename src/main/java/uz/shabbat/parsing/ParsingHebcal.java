@@ -6,10 +6,13 @@ import org.jsoup.nodes.Element;
 import uz.shabbat.Shabbat;
 
 import java.io.IOException;
-
+/**
+ @author Jebrak Semyon
+ @version 1.0
+ */
 public class ParsingHebcal implements Parsing{
     @Override
-    public Shabbat getShabat(String geoID) throws IOException {
+    public Shabbat getShabat(String geoID, String driverPath) throws IOException {
         String url = "https://www.hebcal.com/shabbat?geonameid=" + geoID + "&b=18&M=off&m=20&lg=s";
         Document doc = Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201")

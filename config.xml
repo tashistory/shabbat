@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<config nameWebsite="hebcal.com" tgToken="6125429176:AAF5RCb68lhKPXUeEBOyefGMIrI9BFN3pZY" chatId="722152527">
+<config nameWebsite="chabad.org" tgToken="6125429176:AAF5RCb68lhKPXUeEBOyefGMIrI9BFN3pZY" chatId="722152527" driverPath="driver\chromedriver.exe">
     <geoID>681</geoID>
     <geoID>883</geoID>
     <geoID>882</geoID>
