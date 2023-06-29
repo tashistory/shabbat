@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  @author Jebrak Semyon
- @version 1.0
+ @version 1.2
  */
 public class Main {
 
@@ -75,18 +75,24 @@ public class Main {
         Config config = parsing.getConfig();
         List<String> geoIDs = List.of(config.getGeoID());
         String tgToken = config.getTgToken();
-        String chatId = config.getChatId();
+        String chatIds = config.getChatId();
         SendMessage send = SendMessage.getInstance();
         String namewebsite = config.getNameWebsite();
         String driverPath = config.getDriverPath();
         if ("hebcal.com".equals(namewebsite)){
             String txt = getMassage(parsing.getShabats(new ParsingHebcal(), "", geoIDs));
-            send.send(tgToken, chatId, txt);
+            for (String chatId : chatIds.split(",")) {
+                send.send(tgToken, chatId, txt);
+            }
         } else if ("chabad.org".equals(namewebsite)) {
             String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), driverPath, geoIDs));
-            send.send(tgToken, chatId, txt);
+            for (String chatId : chatIds.split(",")) {
+                send.send(tgToken, chatId, txt);
+            }
             txt = parsing.getCapter(new ParsingChapterChabadOrg());
-            send.send(tgToken, chatId, txt);
+            for (String chatId : chatIds.split(",")) {
+                send.send(tgToken, chatId, txt);
+            }
         } else {
             throw new UnsupportedOperationException("Wrong site. Use the config file!");
         }
