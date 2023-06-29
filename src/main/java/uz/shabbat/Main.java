@@ -28,7 +28,7 @@ public class Main {
     }
 
     public String getCapter(ParsingChapter parsing) throws IOException {
-        return String.format("Краткое описание недельной главы:\n%s", parsing.getChapter());
+        return String.format("\uD83D\uDCDC Краткое описание недельной главы:\n%s", parsing.getChapter());
     }
 
     public static String getMassage(List<Shabbat> shabats) throws IOException {
