@@ -13,8 +13,8 @@ import java.io.IOException;
 
 public class ParsingChapterChabadOrg implements ParsingChapter {
     @Override
-    public String getChapter() throws IOException {
-        System.setProperty("webdriver.chrome.driver", "driver\\chromedriver.exe");
+    public String getChapter(String driverPath) throws IOException {
+        System.setProperty("webdriver.chrome.driver", driverPath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         WebDriver webDriver = new ChromeDriver(options);

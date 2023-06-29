@@ -27,8 +27,8 @@ public class Main {
         return shabbats;
     }
 
-    public String getCapter(ParsingChapter parsing) throws IOException {
-        return String.format("\uD83D\uDCDC Краткое описание недельной главы:\n%s", parsing.getChapter());
+    public String getCapter(ParsingChapter parsing, String driverPath) throws IOException {
+        return String.format("\uD83D\uDCDC Краткое описание недельной главы:\n%s", parsing.getChapter(driverPath));
     }
 
     public static String getMassage(List<Shabbat> shabats) throws IOException {
@@ -89,7 +89,7 @@ public class Main {
             for (String chatId : chatIds.split(",")) {
                 send.send(tgToken, chatId, txt);
             }
-            txt = parsing.getCapter(new ParsingChapterChabadOrg());
+            txt = parsing.getCapter(new ParsingChapterChabadOrg(), driverPath);
             for (String chatId : chatIds.split(",")) {
                 send.send(tgToken, chatId, txt);
             }
