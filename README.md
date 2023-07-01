@@ -23,5 +23,6 @@
 ![ScreenShot](scrin/2.jpg)
 
 Запуск:
-java -jar shabbat_bot.jar
+- Windows - shabbat_bot.exe
+- Linux - shabbat_bot.sh
 Не запускайте бота в Linux от пользователя ROOT!
