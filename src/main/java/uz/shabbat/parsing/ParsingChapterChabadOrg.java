@@ -18,7 +18,7 @@ public class ParsingChapterChabadOrg implements ParsingChapter {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
         WebDriver webDriver = new ChromeDriver(options);
-        webDriver.get("https://ru.chabad.org/parshah/default_cdo/aid/932753/section/home");
+        webDriver.get("https://ru.chabad.org/parshah/default.htm");
         Document doc = Jsoup.parse(webDriver.getPageSource());
         String link = "https://ru.chabad.org"+doc.selectFirst("div.nested_item.child_title.small_vertical_margin").selectFirst("a").attr("href");
         webDriver.get(link);
