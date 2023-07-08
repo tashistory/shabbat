@@ -9,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import uz.shabbat.Shabbat;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 /**
  @author Jebrak Semyon
