@@ -4,10 +4,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import uz.shabbat.Main;
 import uz.shabbat.Shabbat;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 /**
@@ -16,12 +17,21 @@ import java.util.List;
  */
 
 public class ParsingChabadOrg implements Parsing{
+    private final String driverPath;
+
+    public ParsingChabadOrg(String driverPath) {
+        this.driverPath = driverPath;
+    }
+
     @Override
-    public Shabbat getShabat(String geoID, String driverPath) throws IOException {
+    public Shabbat getShabat(String geoID) {
         System.setProperty("webdriver.chrome.driver", driverPath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
-        WebDriver webDriver = new ChromeDriver(options);
+        ChromeDriverService service = new ChromeDriverService.Builder()
+                .withLogFile(new File("logs/slenium.log"))
+                .build();
+        WebDriver webDriver = new ChromeDriver(service, options);
         webDriver.get("https://ru.chabad.org/calendar/candlelighting_cdo/locationid/"+geoID+"/locationtype/1");
         Document doc = Jsoup.parse(webDriver.getPageSource());
         String city = doc.selectFirst("span.js-title-city").text();

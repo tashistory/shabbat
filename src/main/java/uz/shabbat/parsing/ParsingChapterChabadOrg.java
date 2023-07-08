@@ -4,7 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.io.File;
 import java.io.IOException;
 /**
  @author Jebrak Semyon
@@ -12,12 +15,21 @@ import java.io.IOException;
  */
 
 public class ParsingChapterChabadOrg implements ParsingChapter {
+    String driverPath;
+
+    public ParsingChapterChabadOrg(String driverPath) {
+        this.driverPath = driverPath;
+    }
+
     @Override
-    public String getChapter(String driverPath) throws IOException {
+    public String getChapter() {
         System.setProperty("webdriver.chrome.driver", driverPath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless=new");
-        WebDriver webDriver = new ChromeDriver(options);
+        ChromeDriverService service = new ChromeDriverService.Builder()
+                .withLogFile(new File("logs/slenium.log"))
+                .build();
+        WebDriver webDriver = new ChromeDriver(service, options);
         webDriver.get("https://ru.chabad.org/parshah/default.htm");
         Document doc = Jsoup.parse(webDriver.getPageSource());
         String link = "https://ru.chabad.org"+doc.selectFirst("div.nested_item.child_title.small_vertical_margin").selectFirst("a").attr("href");

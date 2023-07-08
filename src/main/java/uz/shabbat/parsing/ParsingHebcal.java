@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class ParsingHebcal implements Parsing{
     @Override
-    public Shabbat getShabat(String geoID, String driverPath) throws IOException {
+    public Shabbat getShabat(String geoID) throws IOException {
         String url = "https://www.hebcal.com/shabbat?geonameid=" + geoID + "&b=18&M=off&m=20&lg=s";
         Document doc = Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201")

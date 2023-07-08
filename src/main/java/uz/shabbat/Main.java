@@ -19,19 +19,19 @@ import java.util.List;
  */
 public class Main {
 
-    public List<Shabbat> getShabats(Parsing parsing, String driverPath, List<String> geoIDs) throws IOException {
+    public List<Shabbat> getShabats(Parsing parsing, List<String> geoIDs) throws IOException {
         List<Shabbat> shabbats = new ArrayList<>();
         for (String geoID : geoIDs) {
-            shabbats.add(parsing.getShabat(geoID, driverPath));
+            shabbats.add(parsing.getShabat(geoID));
         }
         return shabbats;
     }
 
-    public String getCapter(ParsingChapter parsing, String driverPath) throws IOException {
-        return String.format("\uD83D\uDCDC Краткое описание недельной главы:\n%s", parsing.getChapter(driverPath));
+    public String getCapter(ParsingChapter parsing) throws IOException {
+        return String.format("\uD83D\uDCDC Краткое описание недельной главы:\n%s", parsing.getChapter());
     }
 
-    public static String getMassage(List<Shabbat> shabats) throws IOException {
+    public static String getMassage(List<Shabbat> shabats) {
 
         StringBuilder result = new StringBuilder();
 
@@ -80,16 +80,16 @@ public class Main {
         String namewebsite = config.getNameWebsite();
         String driverPath = config.getDriverPath();
         if ("hebcal.com".equals(namewebsite)){
-            String txt = getMassage(parsing.getShabats(new ParsingHebcal(), "", geoIDs));
+            String txt = getMassage(parsing.getShabats(new ParsingHebcal(), geoIDs));
             for (String chatId : chatIds.split(",")) {
                 send.send(tgToken, chatId, txt);
             }
         } else if ("chabad.org".equals(namewebsite)) {
-            String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(), driverPath, geoIDs));
+            String txt = getMassage(parsing.getShabats(new ParsingChabadOrg(driverPath), geoIDs));
             for (String chatId : chatIds.split(",")) {
                 send.send(tgToken, chatId, txt);
             }
-            txt = parsing.getCapter(new ParsingChapterChabadOrg(), driverPath);
+            txt = parsing.getCapter(new ParsingChapterChabadOrg(driverPath));
             for (String chatId : chatIds.split(",")) {
                 send.send(tgToken, chatId, txt);
             }

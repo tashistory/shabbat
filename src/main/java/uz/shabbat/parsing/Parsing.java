@@ -8,5 +8,5 @@ import java.io.IOException;
  @version 1.0
  */
 public interface Parsing {
-   Shabbat getShabat(String geoID, String DriverPath) throws IOException;
+   Shabbat getShabat(String geoID) throws IOException;
 }

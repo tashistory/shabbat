@@ -9,5 +9,5 @@ import java.io.IOException;
 
 public interface ParsingChapter {
 
-    public String getChapter(String driverPath) throws IOException;
+    public String getChapter() throws IOException;
 }
